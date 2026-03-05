@@ -1,0 +1,17 @@
+name: Compilar SISE Serleges para Win7
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.7.9' # Versión clave para evitar errores de DLL en Win7
+      - run: |
+          pip install python-docx docxtpl num2words pyinstaller
+          pyinstaller --onefile --windowed --name "SISE_SERLEGES_WIN7" main.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: EXE_Serleges_Oficina
+          path: dist/*.exe
